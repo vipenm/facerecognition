@@ -16,7 +16,9 @@
         }
     },
     "require": {
-        "php": ">=7.3"
+        "php": ">=7.3",
+        "slim/slim": "^4.8",
+        "slim/psr7": "^1.4"
     },
     "require-dev": {
         "christophwurst/nextcloud": "^21",
