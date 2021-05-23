@@ -16,7 +16,7 @@
  */
 namespace OCA\FaceRecognition\Command;
 
-require_once "PhotoserverSync\ImageManipulator.php";
+require_once "vendor/autoload.php";
 
 use OCP\Files\IRootFolder;
 use OCP\App\IAppManager;
