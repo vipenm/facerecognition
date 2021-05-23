@@ -72,7 +72,28 @@ class SyncPhotoService {
 
     public function execute()
     {
-        echo "Hello world \n";die;
+        $initialList = $this->image->findAllImages(realpath(".") . "/data/Nextcloud/sneek/files/");
+        $initialList = json_encode($initialList);
+        echo $initialList;die;
+		// if ($initialList) {
+        //     foreach ($initialList as $key => $value) {
+        //         $this->image->resizeAllImages($value);
+        //     }
+		// }
+
+		// Resize images, upload to S3 and then move to Synced
+		// $listOfImages = $this->image->findAllImages('./images/ReadyForOptimisation');
+		// if ($listOfImages) {
+		// 	$initialCount = count($listOfImages);
+		// 	$list = $this->image->resizeAllImages($listOfImages);
+
+		// 	if ($list) {
+		// 		$finalCount = count($list);
+		// 		foreach ($list as $key => $value) {
+		// 		$this->image->moveFiles($value, './images/Synced');
+		// 		}
+		// 	}
+		// }
     }
 
 }

@@ -48,27 +48,6 @@ class SyncPhotosCommand extends Command {
 		parent::__construct();
 
 		$this->syncPhotoService = $syncPhotoService;
-
-		// $initialList = $image->findAllImages('./images/UploadedToPi');
-		// if ($initialList) {
-		// foreach ($initialList as $key => $value) {
-		// 	$image->moveFiles($value, './images/ReadyForOptimisation');
-		// }
-		// }
-
-		// // Resize images, upload to S3 and then move to Synced
-		// $listOfImages = $image->findAllImages('./images/ReadyForOptimisation');
-		// if ($listOfImages) {
-		// 	$initialCount = count($listOfImages);
-		// 	$list = $image->resizeAllImages($listOfImages);
-
-		// 	if ($list) {
-		// 		$finalCount = count($list);
-		// 		foreach ($list as $key => $value) {
-		// 		$image->moveFiles($value, './images/Synced');
-		// 		}
-		// 	}
-		// }
 	}
 
 	protected function configure() {
