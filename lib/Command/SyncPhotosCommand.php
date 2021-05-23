@@ -28,6 +28,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 use OCA\FaceRecognition\BackgroundJob\BackgroundService;
+use OCA\FaceRecognition\BackgroundJob\SyncPhotoService;
+use PhotoserverSync\ImageManipulator;
 
 class SyncPhotosCommand extends Command {
 
@@ -37,49 +39,47 @@ class SyncPhotosCommand extends Command {
 	/** @var IUserManager */
 	protected $userManager;
 
+	/** @var ImageManipulator */
+	protected $image;
+
+	protected $syncPhotoService;
+
 	/**
 	 * @param BackgroundService $backgroundService
 	 * @param IUserManager $userManager
 	 */
-	public function __construct(BackgroundService $backgroundService,
-	                            IUserManager      $userManager) {
+	public function __construct(SyncPhotoService $syncPhotoService) {
 		parent::__construct();
 
-		$this->backgroundService = $backgroundService;
-		$this->userManager = $userManager;
+		$this->syncPhotoService = $syncPhotoService;
+		$this->image = new ImageManipulator();
+
+		// $initialList = $image->findAllImages('./images/UploadedToPi');
+		// if ($initialList) {
+		// foreach ($initialList as $key => $value) {
+		// 	$image->moveFiles($value, './images/ReadyForOptimisation');
+		// }
+		// }
+
+		// // Resize images, upload to S3 and then move to Synced
+		// $listOfImages = $image->findAllImages('./images/ReadyForOptimisation');
+		// if ($listOfImages) {
+		// 	$initialCount = count($listOfImages);
+		// 	$list = $image->resizeAllImages($listOfImages);
+
+		// 	if ($list) {
+		// 		$finalCount = count($list);
+		// 		foreach ($list as $key => $value) {
+		// 		$image->moveFiles($value, './images/Synced');
+		// 		}
+		// 	}
+		// }
 	}
 
 	protected function configure() {
 		$this
 			->setName('face:sync_photos')
-			->setDescription('Run\s the photo server sync')
-			->addOption(
-				'user_id',
-				'u',
-				InputOption::VALUE_REQUIRED,
-				'Analyze faces for the given user only. If not given, analyzes images for all users.',
-				null
-			)
-			->addOption(
-				'max_image_area',
-				'M',
-				InputOption::VALUE_REQUIRED,
-				'Caps maximum area (in pixels^2) of the image to be fed to neural network, effectively lowering needed memory. ' .
-				'Use this if face detection crashes randomly.'
-			)
-			->addOption(
-				'defer-clustering',
-				null,
-				InputOption::VALUE_NONE,
-				'Defer the face clustering at the end of the analysis to get persons in a simple execution of the command.'
-			)
-			->addOption(
-				'timeout',
-				't',
-				InputOption::VALUE_REQUIRED,
-				'Sets timeout in seconds for this command. Default is without timeout, e.g. command runs indefinitely.',
-				0
-			);
+			->setDescription('Run\'s the photo server sync');
 	}
 
 	/**
@@ -88,58 +88,7 @@ class SyncPhotosCommand extends Command {
 	 * @return int
 	 */
 	protected function execute(InputInterface $input, OutputInterface $output) {
-		return "Hello world";die;
-		$this->backgroundService->setLogger($output);
-
-		// Extract user, if any
-		//
-		$userId = $input->getOption('user_id');
-		$user = null;
-
-		if (!is_null($userId)) {
-			$user = $this->userManager->get($userId);
-			if ($user === null) {
-				throw new \InvalidArgumentException("User with id <$userId> in unknown.");
-			}
-		}
-
-		// Extract timeout
-		//
-		$timeout = $input->getOption('timeout');
-		if (!is_null($timeout)) {
-			if ($timeout < 0) {
-				throw new \InvalidArgumentException("Timeout must be positive value in seconds.");
-			}
-		} else {
-			$timeout = 0;
-		}
-
-		// Extract max image area
-		//
-		$maxImageArea = $input->getOption('max_image_area');
-		if (!is_null($maxImageArea)) {
-			$maxImageArea = intval($maxImageArea);
-
-			if ($maxImageArea === 0) {
-				throw new \InvalidArgumentException("Max image area must be positive number.");
-			}
-
-			if ($maxImageArea < 0) {
-				throw new \InvalidArgumentException("Max image area must be positive value.");
-			}
-		}
-
-		// Extract defer clustering option
-		//
-		$deferClustering = $input->getOption('defer-clustering');
-
-		// Extract verbosity (for command, we don't need this, but execute asks for it, if running from cron job).
-		//
-		$verbose = $input->getOption('verbose');
-
-		// Main thing
-		//
-		$this->backgroundService->execute($timeout, $verbose, $user, $maxImageArea, $deferClustering);
+		$this->syncPhotoService->execute();
 
 		return 0;
 	}
