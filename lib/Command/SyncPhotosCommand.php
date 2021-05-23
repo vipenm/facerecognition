@@ -16,8 +16,6 @@
  */
 namespace OCA\FaceRecognition\Command;
 
-require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
-
 use OCP\Files\IRootFolder;
 use OCP\App\IAppManager;
 use OCP\IConfig;
@@ -31,7 +29,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use OCA\FaceRecognition\BackgroundJob\BackgroundService;
 use OCA\FaceRecognition\BackgroundJob\SyncPhotoService;
-use PhotoserverSync\ImageManipulator;
 
 class SyncPhotosCommand extends Command {
 
@@ -40,9 +37,6 @@ class SyncPhotosCommand extends Command {
 
 	/** @var IUserManager */
 	protected $userManager;
-
-	/** @var ImageManipulator */
-	protected $image;
 
 	protected $syncPhotoService;
 
@@ -54,7 +48,6 @@ class SyncPhotosCommand extends Command {
 		parent::__construct();
 
 		$this->syncPhotoService = $syncPhotoService;
-		$this->image = new ImageManipulator();
 
 		// $initialList = $image->findAllImages('./images/UploadedToPi');
 		// if ($initialList) {

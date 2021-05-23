@@ -40,6 +40,9 @@ use OCA\FaceRecognition\BackgroundJob\Tasks\StaleImagesRemovalTask;
 use OCA\FaceRecognition\BackgroundJob\Tasks\UnlockTask;
 
 use Symfony\Component\Console\Output\OutputInterface;
+use PhotoserverSync\ImageManipulator;
+
+require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
 
 /**
  * Background service. Both command and cron job are calling this service for long-running background operations.
@@ -58,14 +61,18 @@ class SyncPhotoService {
 	/** @var FaceRecognitionContext */
 	private $context;
 
+    /** @var ImageManipulator */
+	protected $image;
+
 	public function __construct(Application $application, FaceRecognitionContext $context) {
 		$this->application = $application;
 		$this->context = $context;
+        $this->image = new ImageManipulator();
 	}
 
     public function execute()
     {
-        echo "Hello World";
+
     }
 
 }

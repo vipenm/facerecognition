@@ -9,3 +9,4 @@ node_modules
 clover.xml
 translationtool.phar
 translationfiles
+config/config.json
