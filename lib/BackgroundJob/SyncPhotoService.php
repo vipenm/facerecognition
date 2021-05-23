@@ -72,6 +72,12 @@ class SyncPhotoService {
 
     public function execute()
     {
+
+		// get list of persons using PersonController::index and save names as array
+		// get filenames of the persons using above array and passing it into PersonController::find
+		// pass json returned into resizeAllImages() and compare file names - then add name to AWS metadata
+
+
         $initialList = $this->image->findAllImages(realpath(".") . "/data/Nextcloud/sneek/files/");
 		if ($initialList) {
             $this->image->resizeAllImages($initialList);
