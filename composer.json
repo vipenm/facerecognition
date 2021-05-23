@@ -16,10 +16,16 @@
         }
     },
     "require": {
-        "php": ">=7.3"
+        "php": ">=7.3",
+        "vipenm/photoserver-sync": "dev-master"
     },
     "require-dev": {
         "christophwurst/nextcloud": "^21",
         "phpunit/phpunit": "^8"
-    }
+    },
+    "autoload": {
+        "psr-4": {
+          "PhotoserverSync\\": "vendor/vipenm/photoserver-sync/src/"
+        }
+      }
 }
