@@ -167,6 +167,7 @@ class PersonController extends Controller {
 				$image = [];
 				$image['thumbUrl'] = $thumbUrl;
 				$image['fileUrl'] = $fileUrl;
+				$image['file'] = substr(strstr($fileUrl, 'scrollto='), strlen('scrollto='));
 
 				$resp['images'][] = $image;
 			}
