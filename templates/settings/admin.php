@@ -10,7 +10,7 @@
 			<a target="_blank" rel="noreferrer noopener" class="icon-info" title="<?php p($l->t('Open Documentation'));?>" href="https://github.com/matiasdelellis/facerecognition/wiki"></a>
 		</h2>
 		<h3>
-			<?php p($l->t('Temporary files jfjfh'));?>
+			<?php p($l->t('Temporary files'));?>
 		</h3>
 		<p class="settings-hint"><?php p($l->t('During analysis, temporary files are used to ensure homogeneity between all images.'));?></p>
 		<p class="settings-hint"><?php p($l->t('Small images allow a quick analysis, but you can lose the smallest faces of your photos. Large images can improve the results, but the analysis will be slower.'));?>
