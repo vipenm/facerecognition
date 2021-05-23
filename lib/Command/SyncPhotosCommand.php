@@ -16,7 +16,7 @@
  */
 namespace OCA\FaceRecognition\Command;
 
-require_once "../../vendor/autoload.php";
+require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
 
 use OCP\Files\IRootFolder;
 use OCP\App\IAppManager;
