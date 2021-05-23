@@ -72,7 +72,7 @@ class SyncPhotoService {
 
     public function execute()
     {
-
+        echo "Hello world \n";die;
     }
 
 }
