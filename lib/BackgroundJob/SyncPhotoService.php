@@ -64,20 +64,17 @@ class SyncPhotoService {
     /** @var ImageManipulator */
 	private $image;
 
-	private $personController;
-
-	public function __construct(Application $application, FaceRecognitionContext $context, PersonController $personController) {
+	public function __construct(Application $application, FaceRecognitionContext $context) {
 		$this->application = $application;
 		$this->context = $context;
         $this->image = new ImageManipulator();
-		$this->personController = $personController;
 	}
 
     public function execute()
     {
-		$res = $this->personController->index();
-		echo json_encode($res);
-		die;
+		// $res = $this->personController->index();
+		// echo json_encode($res);
+		// die;
 		// get list of persons using PersonController::index and save names as array
 		// get filenames of the persons using above array and passing it into PersonController::find
 		// pass json returned into resizeAllImages() and compare file names - then add name to AWS metadata
