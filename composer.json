@@ -17,7 +17,8 @@
     },
     "require": {
         "php": ">=7.3",
-        "vipenm/photoserver-sync": "dev-face-recognition"
+        "vipenm/photoserver-sync": "dev-face-recognition",
+        "guzzlehttp/guzzle": "^7.3"
     },
     "require-dev": {
         "christophwurst/nextcloud": "^21",

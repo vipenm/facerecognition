@@ -48,6 +48,7 @@ Persons.prototype = {
     load: function () {
         var deferred = $.Deferred();
         var self = this;
+        console.log(this._baseUrl);
         $.get(this._baseUrl+'/persons').done(function (response) {
             self._enabled = response.enabled;
             self._persons = response.persons.sort(function(a, b) {

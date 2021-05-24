@@ -41,6 +41,7 @@ use OCA\FaceRecognition\BackgroundJob\Tasks\UnlockTask;
 use OCA\FaceRecognition\Controller\PersonController;
 use Symfony\Component\Console\Output\OutputInterface;
 use PhotoserverSync\ImageManipulator;
+use GuzzleHttp\Client;
 
 require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
 
@@ -64,14 +65,20 @@ class SyncPhotoService {
     /** @var ImageManipulator */
 	private $image;
 
+	private $client;
+
 	public function __construct(Application $application, FaceRecognitionContext $context) {
 		$this->application = $application;
 		$this->context = $context;
         $this->image = new ImageManipulator();
+		$this->client = new Client(['https://nextcloud.vipenmahay.com']);
 	}
 
     public function execute()
     {
+		$res = $this->client->get('persons');
+		echo $res->getBody();
+
 		// $res = $this->personController->index();
 		// echo json_encode($res);
 		// die;
