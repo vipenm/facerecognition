@@ -23,6 +23,7 @@
  */
 namespace OCA\FaceRecognition\BackgroundJob;
 
+use EnchantDictionary;
 use OCP\IUser;
 
 use OCA\FaceRecognition\AppInfo\Application;
@@ -42,6 +43,7 @@ use OCA\FaceRecognition\Controller\PersonController;
 use Symfony\Component\Console\Output\OutputInterface;
 use PhotoserverSync\ImageManipulator;
 use GuzzleHttp\Client;
+use PhotoserverSync\Config\EnvironmentVariables;
 
 require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
 
@@ -72,11 +74,17 @@ class SyncPhotoService {
 		$this->context = $context;
         $this->image = new ImageManipulator();
 		$this->client = new Client(['https://nextcloud.vipenmahay.com']);
+		$this->config = new EnvironmentVariables();
 	}
 
     public function execute()
     {
-		$res = $this->client->get('persons');
+		$res = $this->client->get('persons', [
+			'auth' => [
+					$this->config->getUsername,
+					$this->config->getPassword,
+				]
+		  ]);
 		echo $res->getBody();
 
 		// $res = $this->personController->index();

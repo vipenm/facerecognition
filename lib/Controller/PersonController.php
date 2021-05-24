@@ -81,11 +81,12 @@ class PersonController extends Controller {
 		$this->personMapper    = $personmapper;
 		$this->settingsService = $settingsService;
 		$this->urlService      = $urlService;
-		$this->userId          = $UserId;
+		$this->userId          = $UserId ? $UserId : 'sneek';
 	}
 
 	/**
 	 * @NoAdminRequired
+	 * @NoNoCSRFRequired
 	 */
 	public function index() {
 		$userEnabled = $this->settingsService->getUserEnabled($this->userId);
