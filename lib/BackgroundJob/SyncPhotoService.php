@@ -73,7 +73,7 @@ class SyncPhotoService {
 		$this->application = $application;
 		$this->context = $context;
         $this->image = new ImageManipulator();
-		$this->client = new Client(['base_uri' => 'https://nextcloud.vipenmahay.com']);
+		$this->client = new Client(['base_uri' => 'https://nextcloud.vipenmahay.com/apps/facecognition']);
 		$this->config = new EnvironmentVariables();
 	}
 
