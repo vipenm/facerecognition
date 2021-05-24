@@ -38,7 +38,7 @@ use OCA\FaceRecognition\BackgroundJob\Tasks\ImageProcessingTask;
 use OCA\FaceRecognition\BackgroundJob\Tasks\LockTask;
 use OCA\FaceRecognition\BackgroundJob\Tasks\StaleImagesRemovalTask;
 use OCA\FaceRecognition\BackgroundJob\Tasks\UnlockTask;
-
+use OCA\FaceRecognition\Controller\PersonController;
 use Symfony\Component\Console\Output\OutputInterface;
 use PhotoserverSync\ImageManipulator;
 
@@ -62,26 +62,32 @@ class SyncPhotoService {
 	private $context;
 
     /** @var ImageManipulator */
-	protected $image;
+	private $image;
 
-	public function __construct(Application $application, FaceRecognitionContext $context) {
+	private $personController;
+
+	public function __construct(Application $application, FaceRecognitionContext $context, PersonController $personController) {
 		$this->application = $application;
 		$this->context = $context;
         $this->image = new ImageManipulator();
+		$this->personController = $personController;
 	}
 
     public function execute()
     {
-
+		$res = $this->personController->index();
+		echo json_encode($res);
+		die;
 		// get list of persons using PersonController::index and save names as array
 		// get filenames of the persons using above array and passing it into PersonController::find
 		// pass json returned into resizeAllImages() and compare file names - then add name to AWS metadata
 
+        // $initialList = $this->image->findAllImages(realpath(".") . "/data/Nextcloud/sneek/files/");
+		// if ($initialList) {
+        //     $this->image->resizeAllImages($initialList);
+		// }
 
-        $initialList = $this->image->findAllImages(realpath(".") . "/data/Nextcloud/sneek/files/");
-		if ($initialList) {
-            $this->image->resizeAllImages($initialList);
-		}
+		// move each image into new folder 'Synced'
     }
 
 }
