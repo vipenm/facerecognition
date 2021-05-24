@@ -86,7 +86,6 @@ class PersonController extends Controller {
 
 	/**
 	 * @NoAdminRequired
-	 * @NoNoCSRFRequired
 	 */
 	public function index() {
 		$userEnabled = $this->settingsService->getUserEnabled($this->userId);
